@@ -42,13 +42,11 @@ function grab_trajectories(pc, times, pre, post, pats, type, din, fout, visual, 
     % Iterate patients
     for p = pats
         disp(['Calculating ode pat ', num2str(ct), ' of ', num2str(length(pats))]);
-        if visual
-            subplot(shape(1),shape(2), ct);hold all; 
-        end
-
         y_keep = zeros(length(times), tot_num);
         
+        
         if visual
+            subplot(shape(1),shape(2), ct);hold all; 
             % Plot each trajectory
             for i = 1:1:tot_num 
 

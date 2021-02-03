@@ -17,7 +17,7 @@ export TMPDIR=${BB_WORKDIR}
 
 cd ..
 
-matlab -nodisplay -r "run_analysis_group({'double', 'mean'}, 50, $1, false);exit"
-matlab -nodisplay -r "run_analysis_group({'double', 'mean'}, 650, $1, false);exit"
-matlab -nodisplay -r "run_analysis_group({'double', 'fft'}, 50, $1, false);exit"
-matlab -nodisplay -r "run_analysis_group({'double', 'fft'}, 650, $1, false);exit"
+matlab -nodisplay -r "run_analysis_group({'double', 'mean'}, 50, $1, false, 1.1);exit"
+matlab -nodisplay -r "run_analysis_group({'double', 'mean'}, 650, $1, false, 1.1);exit"
+matlab -nodisplay -r "run_analysis_group({'double', 'fft'}, 50, $1, false, 1.1);exit"
+matlab -nodisplay -r "run_analysis_group({'double', 'fft'}, 650, $1, false, 1.1);exit"
