@@ -25,7 +25,7 @@ matlab -nodisplay -r "run_hypercube_bear( \
 [4],\
 16*1024^2,\
 {'double', 'fft'},\
-'m2_runs$1/dists650',\
+'m_runs$1/dists650',\
 2018641448); exit;" 
 
 # these median values are the medians of the control group parameters

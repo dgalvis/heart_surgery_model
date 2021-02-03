@@ -17,4 +17,4 @@ export TMPDIR=${BB_WORKDIR}
 
 cd ../..
 
-matlab -nodisplay -r "run_ode_bear([50,50], {'double', 'mean'}, 'm2_runs$1/dists50', 'm2_runs$1/dists50'); exit;" 
+matlab -nodisplay -r "run_ode_bear([650,650], {'double', 'mean'}, 'm_runs$1/dists650', 'm_runs$1/dists650'); exit;" 
