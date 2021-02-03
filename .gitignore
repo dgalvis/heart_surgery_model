@@ -1,0 +1,9 @@
+.DS_Store
+*.html
+*.swp
+__pycache__/
+*.err
+*.stats
+*.out
+results/**/*.mat
+results/**/*.csv
