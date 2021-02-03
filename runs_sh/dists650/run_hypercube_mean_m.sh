@@ -24,7 +24,7 @@ matlab -nodisplay -r "run_hypercube_bear( \
 [2],\
 [4],\
 16*1024^2,\
-{'double', 'mean},\
+{'double', 'mean'},\
 'm_runs$1/dists650',\
 2018641448); exit;" 
 

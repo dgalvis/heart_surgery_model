@@ -24,12 +24,12 @@ matlab -nodisplay -r "run_hypercube_bear( \
 [2],\
 [4],\
 4*1024^2,\
-{'double', 'mean},\
+{'double', 'mean'},\
 'control$1/dists50',\
 1982400768); exit;" 
 
 matlab -nodisplay -r "run_copy_hypercube_bear(1:4,\
 4,\
-{'double', 'mean},\
+{'double', 'mean'},\
 'control$1/dists50'\
 ); exit;" 
