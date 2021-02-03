@@ -25,10 +25,6 @@ matlab -nodisplay -r "run_hypercube_bear( \
 [2,4,6],\
 16*1024^2,\
 {'double', 'fft'},\
-:wqa
-
-:wqa
-:w
 'KA_runs$1/dists650',\
 2001330924); exit;" 
 
