@@ -75,7 +75,7 @@ function [par_choices, error] = run_ode_bear(dists, type, din, dout)
     [par_choices, error] = sort_me(par_choices, error, pats);
 
     % Save!
-    data_out = fullfile('results', dout, ['results_',type{1},'_',type{2},'.mat']);
+    data_out = fullfile(dout, ['results_',type{1},'_',type{2},'.mat']);
     save(data_out, 'par_choices', 'error', ...
          'pts', 'pats','type','dists', '-v7.3');
 end
