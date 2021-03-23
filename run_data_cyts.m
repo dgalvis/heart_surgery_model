@@ -32,16 +32,16 @@ addpath('functions_cyts');
 % Cytokine data directory
 dir = './data/cytokines';
 % Cytokine data filename
-fin = fullfile(dir, 'dataset.csv');
+fin = fullfile(dir, 'dataset_full.csv');
 % [pre, post, cyt1, cyt2]
-var_names = {'ACTH', 'CORTISOL', 'IL6', 'TNFA'};
+var_names = {'ACTH', 'CORTISOL', 'IL10', 'IL6', 'IL8', 'TNFA'};
 % scale [pre, post, cyt1, cyt2] 
-conversions = [1, 0.0363, 1, 1];
+conversions = [1, 0.0363, 1, 1, 1, 1];
 % Time to shift pre by
 shift = 10;
 
 % Get data
-[times, pre, post, cyt1, cyt2] = get_data_cyts(fin, var_names, conversions, shift,  false);
+[times, pre, post, cyt1, cyt2, cyt3, cyt4] = get_data_cyts(fin, var_names, conversions, shift,  true);
 
 
 % keep same number of points as controls
@@ -51,10 +51,13 @@ pre = pre(1:num_points,:);
 post = post(1:num_points,:);
 cyt1 = cyt1(1:num_points,:);
 cyt2 = cyt2(1:num_points,:);
-
+cyt3 = cyt3(1:num_points,:);
+cyt4 = cyt4(1:num_points,:);
 % Save outputs
 save(fullfile(dir,'cytokines_data.mat'));
 csvwrite(fullfile(dir,'cortisol.csv'), post);
 csvwrite(fullfile(dir,'acth.csv'), pre);
-csvwrite(fullfile(dir,'IL6.csv'), cyt1);
-csvwrite(fullfile(dir,'TNFA.csv'), cyt2);
+csvwrite(fullfile(dir,'IL10.csv'), cyt1);
+csvwrite(fullfile(dir,'IL6.csv'), cyt2);
+csvwrite(fullfile(dir,'IL8.csv'), cyt3);
+csvwrite(fullfile(dir,'TNFA.csv'), cyt4);

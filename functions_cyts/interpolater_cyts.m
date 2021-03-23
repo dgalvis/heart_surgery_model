@@ -1,7 +1,8 @@
 %=========================================================================%
-% Function [new_times, outputs] = interpolater_cyts(times, inputs, pts)
-% Author: Daniel Galvis
-% Description: This function uses linear interpolation to resample a dataset. It assumes
+% function [new_times, outputs] = interpolater_cyts(times, inputs, pts)
+%
+%
+% This function uses linear interpolation to resample a dataset. It assumes
 % the data has at most 3 dimensions and that time points is the first dimension
 % 
 % Parameters

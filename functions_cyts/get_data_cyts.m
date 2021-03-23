@@ -1,13 +1,12 @@
 %=========================================================================%
-% Function [times, pre, post] = get_data_cyts(fin, var_names, conversions, shift, verbose)
-% Author: Daniel Galvis
+% function [times, pre, post] = get_data_cyts(fin, var_names, conversions, shift, verbose)
 %
-% Description: Get the data interpolate it, time shift post relative to pre, and maybe
+% Get the data interpolate it, time shift post relative to pre, and maybe
 % plot. Getting ready for optimisation
 %
 % Parameters
 % ----------
-% fin : dataset csv (see run_data_cyts.m)
+% fin : dataset csv
 % var_names : names of columns in the csv (4-cell array). These will be pre
 %     and post respectively and cyt1 and cyt2
 % conversions : multiple pre, post, cyt1, cyt2 by these scalars (change units)
@@ -25,7 +24,7 @@
 % all patients are brought in and indexed in order.
 % in my case number of patients is 10.
 %=========================================================================%
-function [times, pre, post, cyt1, cyt2] = get_data_cyts(fin, var_names, conversions, shift, verbose)
+function [times, pre, post, cyt1, cyt2, cyt3, cyt4] = get_data_cyts(fin, var_names, conversions, shift, verbose)
 
 
     % Read data
@@ -55,6 +54,8 @@ function [times, pre, post, cyt1, cyt2] = get_data_cyts(fin, var_names, conversi
     post_name = var_names{2}; %col_names(post_idx);
     cyt1_name = var_names{3};
     cyt2_name = var_names{4};
+    cyt3_name = var_names{5};
+    cyt4_name = var_names{6};
     
     for c_idx = 1:size(data, 2)
         if strcmp(col_names{c_idx}, pre_name)
@@ -65,10 +66,14 @@ function [times, pre, post, cyt1, cyt2] = get_data_cyts(fin, var_names, conversi
             cyt1_idx = c_idx;
         elseif strcmp(col_names{c_idx}, cyt2_name)
             cyt2_idx = c_idx;
+        elseif strcmp(col_names{c_idx}, cyt3_name)
+            cyt3_idx = c_idx;
+        elseif strcmp(col_names{c_idx}, cyt4_name)
+            cyt4_idx = c_idx;
         end
     end
     
-    % Conversions
+    
     disp(['pre: ', pre_name]);
     pre = squeeze(data3D(:, pre_idx, :))*conversions(1);
     disp(['post: ', post_name]);
@@ -77,18 +82,24 @@ function [times, pre, post, cyt1, cyt2] = get_data_cyts(fin, var_names, conversi
     cyt1 = squeeze(data3D(:, cyt1_idx, :))*conversions(3);
     disp(['cyt2: ', cyt2_name]);
     cyt2 = squeeze(data3D(:, cyt2_idx, :))*conversions(4);
-
+    disp(['cyt3: ', cyt3_name]);
+    cyt3 = squeeze(data3D(:, cyt3_idx, :))*conversions(5);
+    disp(['cyt4: ', cyt4_name]);
+    cyt4 = squeeze(data3D(:, cyt4_idx, :))*conversions(6);
+    
     % Number of points to use (100x)
     pts = (max(size(post))-1)*10 + 1;
-    % Interpolate the data
+    % Interpolate and shift the data
     [~, pre] = interpolater_cyts(times, pre, pts);
     [~, cyt1] = interpolater_cyts(times, cyt1, pts);
     [~, cyt2] = interpolater_cyts(times, cyt2, pts);
+    [~, cyt3] = interpolater_cyts(times, cyt3, pts);
+    [~, cyt4] = interpolater_cyts(times, cyt4, pts);
+    
     [times, post] = interpolater_cyts(times, post, pts);
     
-    % Shift the data
-    [new_times, new_pre, new_post, new_cyt1, new_cyt2] = ...
-        delay_shift_cyts(times, pre, post, cyt1, cyt2, shift);
+    [new_times, new_pre, new_post, new_cyt1, new_cyt2, new_cyt3, new_cyt4] = ...
+        delay_shift_cyts(times, pre, post, cyt1, cyt2, cyt3, cyt4, shift);
     
     
     % Maybe plot the data and the shifted data
@@ -135,7 +146,8 @@ function [times, pre, post, cyt1, cyt2] = get_data_cyts(fin, var_names, conversi
     post = new_post;
     cyt1 = new_cyt1;
     cyt2 = new_cyt2;
-    
+    cyt3 = new_cyt3;
+    cyt4 = new_cyt4; 
     % Remove negative values
     min_pre = min(pre);
     min_pre(min_pre > 0) = 0;
@@ -154,8 +166,15 @@ function [times, pre, post, cyt1, cyt2] = get_data_cyts(fin, var_names, conversi
     % Remove negative values
     min_cyt2 = min(cyt2);
     min_cyt2(min_cyt2 > 0) = 0;
-    cyt2 = cyt2 - min_cyt2;  
+    cyt2 = cyt2 - min_cyt2; 
     
-    % (There should be no negative values unlesss the data was filtered)
-
+    % Remove negative values
+    min_cyt3 = min(cyt3);
+    min_cyt3(min_cyt3 > 0) = 0;
+    cyt3 = cyt3 - min_cyt3;   
+    
+    % Remove negative values
+    min_cyt4 = min(cyt4);
+    min_cyt4(min_cyt4 > 0) = 0;
+    cyt4 = cyt4 - min_cyt4;   
 end

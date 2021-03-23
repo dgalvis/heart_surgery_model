@@ -1,10 +1,8 @@
 %=========================================================================%
-% Function [new_t, new_pre, new_post, new_cyt1, new_cyt2] = ...
+% function [new_t, new_pre, new_post, new_cyt1, new_cyt2] = ...
 %           delay_shift_cyts(times, pre, post, cyt1, cyt2, shift)
-% Author: Daniel Galvis
 %
-% Description: shift pre so that post, cyt1, and cyt2 see a previous time
-% point (see manuscript, post' = F(pre(t-10), *).
+% Shift the data so that we can assume pre takes shift time to affect post
 %
 % Parameters
 % ----------
@@ -25,10 +23,8 @@
 % new_cyt1 : new_t x patients pre data points
 % new_cyt2 : new_t x patients pro data points
 %=========================================================================%
-function [new_t, new_pre, new_post, new_cyt1, new_cyt2] = ...
-          delay_shift_cyts(times, pre, post, cyt1, cyt2, shift)
-      
-    % Trivial case
+function [new_t, new_pre, new_post, new_cyt1, new_cyt2, new_cyt3, new_cyt4] = ...
+          delay_shift_cyts(times, pre, post, cyt1, cyt2, cyt3, cyt4, shift)
     if shift == 0
         new_pre = pre;
         new_post = post;
@@ -36,6 +32,8 @@ function [new_t, new_pre, new_post, new_cyt1, new_cyt2] = ...
         
         new_cyt1 = cyt1;
         new_cyt2 = cyt2;
+        new_cyt3 = cyt3;
+        new_cyt4 = cyt4;
         return
     end
               
@@ -52,6 +50,8 @@ function [new_t, new_pre, new_post, new_cyt1, new_cyt2] = ...
          % Cytokines match the post data
         new_cyt1 = cyt1(t_idx:end, :);
         new_cyt2 = cyt2(t_idx:end, :);     
+        new_cyt3 = cyt3(t_idx:end, :);
+        new_cyt4 = cyt4(t_idx:end, :); 
     else
         % Pre is shifted
         new_pre = pre(t_idx:end, :);
@@ -61,6 +61,8 @@ function [new_t, new_pre, new_post, new_cyt1, new_cyt2] = ...
         % Cytokines match the post data
         new_cyt1 = cyt1(1:end - t_idx + 1, :);
         new_cyt2 = cyt2(1:end - t_idx + 1, :);    
+        new_cyt3 = cyt3(1:end - t_idx + 1, :);
+        new_cyt4 = cyt4(1:end - t_idx + 1, :); 
 
     end
    
