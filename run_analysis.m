@@ -153,7 +153,7 @@ function run_analysis(type, dists, run_id, visual, threshold)
     fout_c_medbest = 'control_group_medbest';
     fout_s_medbest = 'surgical_group_medbest';
 
-    medbest = [baseline_controls; pc_c(1,:)];
+    medbest = [baseline_controls; pc_cm(1,:)];
     grab_trajectories(medbest, times, pre, post, pats_c, type, din, fout_c_medbest, visual, [3,1]);
     grab_trajectories(medbest, times, pre, post, pats_s, type, din, fout_s_medbest, visual, [5,2]);
 
