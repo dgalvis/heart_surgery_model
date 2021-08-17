@@ -8,8 +8,7 @@ There are two versions of the model 'double' and 'single'
 - 'double' has 6 parameters and two compartments (to separate timescales)  
 
 ### Author: Daniel Galvis
-### Manuscript: To be added
-### Citations: Add Gibbison paper and others of acth -> cortisol modelling
+### Manuscript: The dynamic interaction of systemic inflammation and the hypothalamic-pituitary-adrenal (HPA) axis during and after major surgery (submitted).
 ### License: BSD 2-Clause License (open source)
 
 Model
@@ -54,6 +53,7 @@ The code to run is here (each has a detailed docstring)
    - run_ode_bear.m - run the model on all parameters of the hypercube for all patients in data_all.mat (controls too)
    - run_copy_hypercube_bear.m - Parameter 4 of this model is an integer, this adds that to the hypercube
    - run_analysis.m - takes in the results of hypercube evaluation and analyses the best solutions
+   - run_pca.m - compares features (Cortisol, ACTH, Cytokines) using pca and correlation (for all patient's data)
 
 ### data :  
 Contains the acth, cortisol data (it also has cytokine data which is not yet in the model)  
@@ -62,6 +62,7 @@ Contains the acth, cortisol data (it also has cytokine data which is not yet in 
    - CORT_ACTH_control_ab.xlsx - concatenation of above
    - CORT_ACTH_surgical.xlsx - surgical dataset (10 patients - Gibbison)
    - Data increments 10 minutes for about 11 - 12 hours  
+   - cortisol units in nmol/L
 
 The data for modelling is in .mat files  
    - data_surgical.mat - surgical data ready for modelling
@@ -71,12 +72,13 @@ The data for modelling is in .mat files
    - acth is time shifted so acth(t-10) hits cortisol
    - pats = 1:10 (surgical), 1:3 (controls), 1:13 (all) where 11:13 is controls
    - times (time points), pre (cortisol), post (acth)   
+   - cortisol units converted to micro-gram/dL
 
 ### data/cytokines :
 The surgical data with cytokines included  
-   - 2075.csv through 2120.csv (original data files)
-   - acth.csv, cortisol.csv, IL6.csv, TNFA.csv - datasets ready for modelling
-   - cytokines_data.mat - datasets ready for modelling
+   - 2075.csv through 2120.csv (original data files) - cortisol in nmol/L
+   - acth.csv, cortisol.csv, IL6.csv, TNFA.csv - datasets ready for modelling (cortisol in micro-gram/dL)
+   - cytokines_data.mat - datasets ready for modelling (cortisol in micro-gram/dL)
 
 Note: In the datasets ready for modelling, Cortisol is converted from nanomolar to microgam per deciliter (0.0363 factor)
 
@@ -97,7 +99,10 @@ Note: In the datasets ready for modelling, Cortisol is converted from nanomolar 
    - the shell scripts to submit the jobs to the HPC
 
 ### results :
-The results are not included in the repository as the filesizes are too large. They are available upon request  
+The full results are not included in the repository as the filesizes are too large. They are available upon request.  
+Please note that the units of cortisol in the repository differ from that in the paper so conversions were made  
+
+0.0363 micro-gram/dL = 1 nmol/L. This affects the units of the parameters (see model above) and the resulting trajectories. In the paper, we use nmol/L, but for all files below the units are in micro-gram/dL.  
 
 ### results/control/dists650  
    - par_choices_acth_cort_double_mean.mat - latin hypercube parameter set
